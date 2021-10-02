@@ -6,7 +6,7 @@ public class CheckForDots : MonoBehaviour
 {
     public CityNetChecker cityNetChecker;
 
-    public float checkRadius;
+    public float checkRadius = 2f;
     public LayerMask DotsLayer;
     private bool didCounted = false;
 

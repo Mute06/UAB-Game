@@ -104,14 +104,19 @@ public class PenTool : MonoBehaviour
 
     public void StopEditingCurrentLine()
     {
-        foreach (var item in currentLine.points)
+        if (currentLine != null)
         {
-            //item.OnDragEvent -= MoveDot;
-            //item.OnClickEvent -= DotClick;
-            item.isEditable = false;
+            foreach (var item in currentLine.points)
+            {
+                //item.OnDragEvent -= MoveDot;
+                //item.OnClickEvent -= DotClick;
+                item.isEditable = false;
+            }
+            float lastLenght = currentLine.lenght;
+            Debug.Log(lastLenght);
+            currentLine = null;
+            lastSelectedDot = null;
         }
-        currentLine = null;
-        lastSelectedDot = null;
     }
     private void DotClick(DotController dot)
     {

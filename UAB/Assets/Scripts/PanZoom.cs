@@ -48,7 +48,7 @@ public class PanZoom : MonoBehaviour
                 {
                     Vector3 direction = touchStart - cam.ScreenToWorldPoint(Input.mousePosition);
                     transform.position += direction;
-                    // transform.position = new Vector3(Mathf.Clamp(transform.position.x, minX, maxX), Mathf.Clamp(transform.position.y, minY, maxY), -10);
+                    transform.position = new Vector3(Mathf.Clamp(transform.position.x, minX, maxX), Mathf.Clamp(transform.position.y, minY, maxY), -10);
                 }
 
 
