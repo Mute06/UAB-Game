@@ -41,6 +41,14 @@ public class PenTool : MonoBehaviour
     [SerializeField] Color SelectedDotColor;
 
     private LineController currentLine;
+    public LineController CurrentLine
+    {
+        get
+        {
+            return currentLine;
+        }
+    }
+
     private Camera cam;
 
 
@@ -52,17 +60,22 @@ public class PenTool : MonoBehaviour
 
     private void AddDot()
     {
-        Debug.Log("Touched");
-        if (currentLine == null)
+        if (ModeController.Instance.currentMode == Modes.Creating)
         {
-            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
+            Debug.Log("Touched");
+            if (currentLine == null)
+            {
+                currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
+                currentLine.penTool = this;
+            }
+            DotController dot = Instantiate(dotPrefab, GetMousePosition(), Quaternion.identity, dotParent).GetComponent<DotController>();
+            dot.OnDragEvent += MoveDot;
+            dot.OnClickEvent += DotClick;
+            dot.SetLine(currentLine);
+            dot.index = currentLine.AddPoint(dot, LastSelectedDot);
+            LastSelectedDot = dot;
         }
-        DotController dot = Instantiate(dotPrefab, GetMousePosition(), Quaternion.identity, dotParent).GetComponent<DotController>();
-        dot.OnDragEvent += MoveDot;
-        dot.OnClickEvent += DotClick;
-        dot.SetLine(currentLine);
-        dot.index = currentLine.AddPoint(dot, LastSelectedDot);
-        LastSelectedDot = dot;
+
     }
     private void DotClick(DotController dot)
     {
@@ -77,20 +90,10 @@ public class PenTool : MonoBehaviour
 
     private Vector3 GetMousePosition()
     {
-        if (Input.touchCount > 0)
-        {
-            Vector3 worldPosition = cam.ScreenToWorldPoint(Input.GetTouch(0).position);
-            worldPosition.z = 0;
-            return worldPosition;
-        }
-        else
-        {
-            Vector3 worldPosition = cam.ScreenToWorldPoint(Input.mousePosition);
-            worldPosition.z = 0;
-            return worldPosition;
-        }
- 
 
+        Vector3 worldPosition = cam.ScreenToWorldPoint(Input.mousePosition);
+        worldPosition.z = 0;
+        return worldPosition;
 
     }
 

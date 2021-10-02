@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class LineController : MonoBehaviour
 {
+    public PenTool penTool;
+    public float lenght;
     private LineRenderer lr;
     private List<DotController> points;
 
@@ -53,11 +55,20 @@ public class LineController : MonoBehaviour
 
     private void LateUpdate()
     {
-        if (lr.positionCount >= 2)
+        if (penTool.CurrentLine == this)
         {
-            for (int i = 0; i < points.Count; i++)
+            if (lr.positionCount >= 2)
             {
-                lr.SetPosition(i, points[i].transform.position);
+                float _lenght = 0f;
+                for (int i = 0; i < points.Count; i++)
+                {
+                    if (i - 1 >= 0)
+                    {
+                        _lenght += Vector3.Distance(points[i - 1].transform.position, points[i].transform.position);
+                    }
+                    lr.SetPosition(i, points[i].transform.position);
+                }
+                lenght = _lenght;
             }
         }
     }
