@@ -39,6 +39,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: Background
+    uniqueID: 2937031115
+    locked: 0
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Dots
+    uniqueID: 219398279
     locked: 0

@@ -13,6 +13,7 @@ public class LineController : MonoBehaviour
     {
         lr = GetComponent<LineRenderer>();
         lr.positionCount = 0;
+        lr.sortingLayerName = "Dots";
         points = new List<DotController>();
     }
     /// <summary>
@@ -72,4 +73,5 @@ public class LineController : MonoBehaviour
             }
         }
     }
+
 }

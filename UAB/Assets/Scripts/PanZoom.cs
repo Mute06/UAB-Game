@@ -5,7 +5,7 @@ using Sirenix.OdinInspector;
 
 public class PanZoom : MonoBehaviour
 {
-
+    public float pinchMultipleir = 0.01f;
     [MinMaxSlider(1, 10)] public Vector2 minMaxZoom;
     Vector3 touchStart;
 
@@ -36,8 +36,11 @@ public class PanZoom : MonoBehaviour
 
                 float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
                 float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
+
+                float difference = currentMagnitude - prevMagnitude;
+                Zoom(difference * pinchMultipleir);
             }
-            if (Input.GetMouseButton(0))
+            else if (Input.GetMouseButton(0))
             {
                 Vector3 direction = touchStart - cam.ScreenToWorldPoint(Input.mousePosition);
                 cam.transform.position += direction;

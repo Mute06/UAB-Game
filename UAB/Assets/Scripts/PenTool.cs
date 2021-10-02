@@ -66,6 +66,7 @@ public class PenTool : MonoBehaviour
             if (currentLine == null)
             {
                 currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
+
                 currentLine.penTool = this;
             }
             DotController dot = Instantiate(dotPrefab, GetMousePosition(), Quaternion.identity, dotParent).GetComponent<DotController>();
