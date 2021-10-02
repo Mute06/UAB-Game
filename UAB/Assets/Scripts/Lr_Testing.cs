@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Lr_Testing : MonoBehaviour
 {
-    [SerializeField] private List<Transform> points;
+    [SerializeField] private List<DotController> points;
     [SerializeField] private LineController line;
 
     private void Start()

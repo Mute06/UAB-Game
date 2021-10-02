@@ -5,26 +5,51 @@ using UnityEngine;
 public class LineController : MonoBehaviour
 {
     private LineRenderer lr;
-    private List<Transform> points;
+    private List<DotController> points;
 
     private void Awake()
     {
         lr = GetComponent<LineRenderer>();
         lr.positionCount = 0;
-        points = new List<Transform>();
+        points = new List<DotController>();
     }
-
-    public void AddPoint(Transform point)
+    /// <summary>
+    /// Adds a point to line
+    /// </summary>
+    /// <param name="point"> </param>
+    /// <param name="lastSelectedPoint"></param>
+    /// <returns>
+    /// index of the added point
+    /// </returns>
+    public int AddPoint(DotController point, DotController lastSelectedPoint)
     {
         lr.positionCount++;
-        points.Add(point);
+
+        if (lastSelectedPoint != null)
+        {
+            int index = lastSelectedPoint.index + 1;
+            points.Insert(index, point);
+            return index;
+        }
+        else
+        {
+            points.Add(point);
+            return points.Count - 1;
+        }
     }
 
-    public void SetUpLine(List<Transform> points)
+    public void SetUpLine(List<DotController> points)
     {
         lr.positionCount = points.Count;
         this.points = points;
     }
+
+    /*
+    public void SplitPointsAtIndex(int index, out List<DotController> beforeDots, out List<DotController> afterDots)
+    {
+
+    }
+    */
 
     private void LateUpdate()
     {
@@ -32,7 +57,7 @@ public class LineController : MonoBehaviour
         {
             for (int i = 0; i < points.Count; i++)
             {
-                lr.SetPosition(i, points[i].position);
+                lr.SetPosition(i, points[i].transform.position);
             }
         }
     }

@@ -4,41 +4,101 @@ using UnityEngine;
 
 public class PenTool : MonoBehaviour
 {
+    [Header("Pen Canvas")]
+    [SerializeField] private PenCanvas penCanvas;
+
     [Header("Dots")]
     [SerializeField] GameObject dotPrefab;
     [SerializeField] private Transform dotParent;
+
+    private DotController lastSelectedDot;
+    public DotController LastSelectedDot { 
+        get
+        {
+            return lastSelectedDot;
+        }
+        set
+        {
+            if (lastSelectedDot != null)
+            {
+                lastSelectedDot.image.color = NormalDotColor;
+            }
+            lastSelectedDot = value;
+
+            if (lastSelectedDot != null)
+            {
+                lastSelectedDot.image.color = SelectedDotColor;
+            }
+        }
+    }
 
     [Header("Lines")]
     [SerializeField] private Transform lineParent;
     [SerializeField] GameObject linePrefab;
 
+    [Header("Colors")]
+    [SerializeField] Color NormalDotColor;
+    [SerializeField] Color SelectedDotColor;
+
     private LineController currentLine;
     private Camera cam;
 
-    private int touchCount;
+
     private void Awake()
     {
         cam = Camera.main;
-    }
-    private void Update()
-    {
-        
-        if (Input.GetMouseButtonDown(0))
-        {
-            Debug.Log("Touched");
-            if (currentLine == null)
-            {
-                currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
-            }
-            GameObject dot = Instantiate(dotPrefab, GetTouchPosition(), Quaternion.identity, dotParent);
-            currentLine.AddPoint(dot.transform);
-        }
+        penCanvas.OnPenCanvasLeftClickEvent += AddDot;
     }
 
-    private Vector3 GetTouchPosition()
+    private void AddDot()
     {
-        Vector3 worldPosition = cam.ScreenToWorldPoint(Input.mousePosition);
-        worldPosition.z = 0;
-        return worldPosition;
+        Debug.Log("Touched");
+        if (currentLine == null)
+        {
+            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
+        }
+        DotController dot = Instantiate(dotPrefab, GetMousePosition(), Quaternion.identity, dotParent).GetComponent<DotController>();
+        dot.OnDragEvent += MoveDot;
+        dot.OnClickEvent += DotClick;
+        dot.SetLine(currentLine);
+        dot.index = currentLine.AddPoint(dot, LastSelectedDot);
+        LastSelectedDot = dot;
+    }
+    private void DotClick(DotController dot)
+    {
+        LastSelectedDot = dot;
+    }
+
+    private void MoveDot(DotController dot)
+    {
+        LastSelectedDot = dot;
+        dot.transform.position = GetMousePosition();
+    }
+
+    private Vector3 GetMousePosition()
+    {
+        if (Input.touchCount > 0)
+        {
+            Vector3 worldPosition = cam.ScreenToWorldPoint(Input.GetTouch(0).position);
+            worldPosition.z = 0;
+            return worldPosition;
+        }
+        else
+        {
+            Vector3 worldPosition = cam.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = 0;
+            return worldPosition;
+        }
+ 
+
+
+    }
+
+    private RaycastHit2D RaycastMousePosition()
+    {
+        Vector2 raycastPos = GetMousePosition();
+        RaycastHit2D hit = Physics2D.Raycast(raycastPos, Vector2.zero);
+
+        return hit;
     }
 }
