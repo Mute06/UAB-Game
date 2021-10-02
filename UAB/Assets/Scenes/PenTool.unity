@@ -1367,6 +1367,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 818934671}
+  - component: {fileID: 818934672}
   m_Layer: 0
   m_Name: Enverionment
   m_TagString: Untagged
@@ -1398,6 +1399,19 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &818934672
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818934670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d9af83ce92bab1947a1e373e373f43bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalBuildings: 4
 --- !u!1001 &835388485
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2572,7 +2586,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0, g: 0, b: 0, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -3742,6 +3756,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 17717366}
     m_Modifications:
+    - target: {fileID: 686537451, guid: bae69b1bc2383554f9489b73f69ed1bb, type: 3}
+      propertyPath: cityNetChecker
+      value: 
+      objectReference: {fileID: 818934672}
     - target: {fileID: 2330905080993315399, guid: bae69b1bc2383554f9489b73f69ed1bb, type: 3}
       propertyPath: m_RootOrder
       value: 0
