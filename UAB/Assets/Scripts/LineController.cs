@@ -7,7 +7,7 @@ public class LineController : MonoBehaviour
     public PenTool penTool;
     public float lenght;
     private LineRenderer lr;
-    private List<DotController> points;
+    public List<DotController> points;
 
     private void Awake()
     {

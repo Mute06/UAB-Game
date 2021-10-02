@@ -8,6 +8,8 @@ public class PanZoom : MonoBehaviour
     public float pinchMultipleir = 0.01f;
     [MinMaxSlider(1, 10)] public Vector2 minMaxZoom;
     Vector3 touchStart;
+    public float minX, minY, maxX, maxY;
+    public bool isPanAllowed;
 
     private Camera cam;
     // Start is called before the first frame update
@@ -42,8 +44,14 @@ public class PanZoom : MonoBehaviour
             }
             else if (Input.GetMouseButton(0))
             {
-                Vector3 direction = touchStart - cam.ScreenToWorldPoint(Input.mousePosition);
-                cam.transform.position += direction;
+                if (isPanAllowed)
+                {
+                    Vector3 direction = touchStart - cam.ScreenToWorldPoint(Input.mousePosition);
+                    transform.position += direction;
+                    // transform.position = new Vector3(Mathf.Clamp(transform.position.x, minX, maxX), Mathf.Clamp(transform.position.y, minY, maxY), -10);
+                }
+
+
             }
             Zoom(Input.GetAxis("Mouse ScrollWheel"));
         }

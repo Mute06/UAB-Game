@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ModeController : MonoBehaviour
 {
@@ -25,15 +26,26 @@ public class ModeController : MonoBehaviour
     }
     #endregion
     public Modes currentMode = Modes.Moving;
-
+    public GameObject CreateButton;
+    public GameObject completeButton;
+    public PenTool penTool;
     public void SwitchToMove()
     {
+        CreateButton.SetActive(true);
+        completeButton.SetActive(false);
         currentMode = Modes.Moving;
     }
 
     public void SwitchToCreate()
     {
         currentMode = Modes.Creating;
+        CreateButton.SetActive(false);
+        completeButton.SetActive(true);
+    }
+
+    public void CompleteDrawingLine()
+    {
+        penTool.StopEditingCurrentLine();
     }
 }
 

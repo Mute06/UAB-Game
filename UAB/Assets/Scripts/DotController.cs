@@ -11,6 +11,7 @@ public class DotController : MonoBehaviour , IDragHandler , IPointerClickHandler
     [HideInInspector] public int index;
     public Action<DotController> OnDragEvent;
     [HideInInspector] public Image image;
+    public bool isEditable = true;
 
 
     private void Awake()
@@ -19,13 +20,20 @@ public class DotController : MonoBehaviour , IDragHandler , IPointerClickHandler
     }
     public void OnDrag(PointerEventData eventData)
     {
-        OnDragEvent?.Invoke(this);
+        if (isEditable)
+        {
+            OnDragEvent?.Invoke(this);
+        }
+
     }
 
     public Action<DotController> OnClickEvent;
     public void OnPointerClick(PointerEventData eventData)
     {
-        OnClickEvent?.Invoke(this);
+        if (isEditable)
+        {
+            OnClickEvent?.Invoke(this);
+        }
     }
 
     public void SetLine(LineController line)

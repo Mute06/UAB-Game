@@ -10,7 +10,7 @@ public class PenTool : MonoBehaviour
     [Header("Dots")]
     [SerializeField] GameObject dotPrefab;
     [SerializeField] private Transform dotParent;
-
+    [SerializeField] private DotController startingDot;
     private DotController lastSelectedDot;
     public DotController LastSelectedDot { 
         get
@@ -58,6 +58,14 @@ public class PenTool : MonoBehaviour
         penCanvas.OnPenCanvasLeftClickEvent += AddDot;
     }
 
+    private void Start()
+    {
+        if (startingDot != null)
+        {
+            AddExistingDot(startingDot);
+        }
+    }
+
     private void AddDot()
     {
         if (ModeController.Instance.currentMode == Modes.Creating)
@@ -77,6 +85,33 @@ public class PenTool : MonoBehaviour
             LastSelectedDot = dot;
         }
 
+    }
+
+    public void AddExistingDot(DotController dot)
+    {
+        if (currentLine == null)
+        {
+            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
+
+            currentLine.penTool = this;
+        }
+        dot.OnDragEvent += MoveDot;
+        dot.OnClickEvent += DotClick;
+        dot.SetLine(currentLine);
+        dot.index = currentLine.AddPoint(dot, LastSelectedDot);
+        LastSelectedDot = dot;
+    }
+
+    public void StopEditingCurrentLine()
+    {
+        foreach (var item in currentLine.points)
+        {
+            //item.OnDragEvent -= MoveDot;
+            //item.OnClickEvent -= DotClick;
+            item.isEditable = false;
+        }
+        currentLine = null;
+        lastSelectedDot = null;
     }
     private void DotClick(DotController dot)
     {
