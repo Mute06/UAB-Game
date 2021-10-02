@@ -108,14 +108,15 @@ public class PenTool : MonoBehaviour
         {
             foreach (var item in currentLine.points)
             {
-                //item.OnDragEvent -= MoveDot;
-                //item.OnClickEvent -= DotClick;
                 item.isEditable = false;
+                item.OnDragEvent -= MoveDot;
+                item.OnClickEvent -= DotClick;
             }
             float lastLenght = currentLine.lenght;
             Debug.Log(lastLenght);
             currentLine = null;
             lastSelectedDot = null;
+            AddExistingDot(startingDot);
         }
     }
     private void DotClick(DotController dot)

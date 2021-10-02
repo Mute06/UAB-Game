@@ -47,12 +47,6 @@ public class LineController : MonoBehaviour
         this.points = points;
     }
 
-    /*
-    public void SplitPointsAtIndex(int index, out List<DotController> beforeDots, out List<DotController> afterDots)
-    {
-
-    }
-    */
 
     private void LateUpdate()
     {
@@ -65,7 +59,7 @@ public class LineController : MonoBehaviour
                 {
                     if (i - 1 >= 0)
                     {
-                        _lenght += Vector3.Distance(points[i - 1].transform.position, points[i].transform.position);
+                        _lenght += Vector2.Distance(points[i - 1].transform.position, points[i].transform.position);
                     }
                     lr.SetPosition(i, points[i].transform.position);
                 }
