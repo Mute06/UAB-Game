@@ -50,12 +50,13 @@ public class PenTool : MonoBehaviour
     }
 
     private Camera cam;
-
+    private MoneyManager moneyManager;
 
     private void Awake()
     {
         cam = Camera.main;
         penCanvas.OnPenCanvasLeftClickEvent += AddDot;
+        moneyManager = FindObjectOfType<MoneyManager>();
     }
 
     private void Start()
@@ -117,6 +118,7 @@ public class PenTool : MonoBehaviour
             currentLine = null;
             lastSelectedDot = null;
             AddExistingDot(startingDot);
+            moneyManager.BuildLine(lastLenght);
         }
     }
     private void DotClick(DotController dot)
