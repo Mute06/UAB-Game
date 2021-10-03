@@ -874,17 +874,9 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1563696818, guid: 9e7dc2fc548711442aae280cc2906a54, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1563696818, guid: 9e7dc2fc548711442aae280cc2906a54, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1818277569}
-    - target: {fileID: 1563696818, guid: 9e7dc2fc548711442aae280cc2906a54, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: CompleteCurrentLevel
-      objectReference: {fileID: 0}
     - target: {fileID: 7738762124773063460, guid: 9e7dc2fc548711442aae280cc2906a54, type: 3}
       propertyPath: penTool
       value: 
@@ -995,6 +987,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &451458133 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1647145177, guid: 9e7dc2fc548711442aae280cc2906a54, type: 3}
+  m_PrefabInstance: {fileID: 451458130}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &468928268
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2668,6 +2665,10 @@ PrefabInstance:
       propertyPath: moneyText
       value: 
       objectReference: {fileID: 451458132}
+    - target: {fileID: 7125555009569342117, guid: 6ca9a9dbd0baefa4a9b769c4f992c3c9, type: 3}
+      propertyPath: notEnoughMoneyPanel
+      value: 
+      objectReference: {fileID: 451458133}
     - target: {fileID: 7125555009569342118, guid: 6ca9a9dbd0baefa4a9b769c4f992c3c9, type: 3}
       propertyPath: m_RootOrder
       value: 7

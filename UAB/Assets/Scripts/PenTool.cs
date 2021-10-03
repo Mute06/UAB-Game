@@ -167,6 +167,7 @@ public class PenTool : MonoBehaviour
         LastSelectedDot = dot;
         if (dot.isHub)
         {
+            /*
             currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
             currentLine.penTool = this;
 
@@ -180,6 +181,7 @@ public class PenTool : MonoBehaviour
             
             startingDot = dot;
             ModeController.Instance.SwitchToCreate();
+            */
         }
     }
 

@@ -329,5 +329,5 @@ MonoBehaviour:
   HubPrefab: {fileID: 1270367622546670910, guid: 642afec71fe6bdd478f50dec2bdc7e9e, type: 3}
   lineParent: {fileID: 0}
   linePrefab: {fileID: 1242906010867530974, guid: 17399764f6805884d85b24c6ed152d55, type: 3}
-  NormalDotColor: {r: 0.9433962, g: 0.91224635, b: 0.91224635, a: 0.6745098}
-  SelectedDotColor: {r: 0.9528302, g: 0.5402716, b: 0.30113026, a: 0.84313726}
+  NormalDotColor: {r: 1, g: 1, b: 1, a: 0.8}
+  SelectedDotColor: {r: 1, g: 0.71473867, b: 0.43867922, a: 0.92941177}

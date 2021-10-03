@@ -11,8 +11,11 @@ public class MoneyManager : MonoBehaviour
     public float earnMoneyPerSeconds;
     public float HubCost = 25f;
     public TextMeshProUGUI moneyText;
+
+    [SerializeField] private GameObject notEnoughMoneyPanel;
     private float totalCableLenght;
     private float currentMoney;
+    private float totalSpendMoney;
     public float CurrentMoney
     {
         get
@@ -40,10 +43,12 @@ public class MoneyManager : MonoBehaviour
         {
             CurrentMoney -= totalCost;
             totalCableLenght += length;
+            Debug.Log(totalCost);
             return true;
         }
         else
         {
+            notEnoughMoneyPanel.SetActive(true);
             return false;
         }
     }
@@ -57,6 +62,7 @@ public class MoneyManager : MonoBehaviour
         }
         else
         {
+            notEnoughMoneyPanel.SetActive(true);
             return false;
         }
     }
