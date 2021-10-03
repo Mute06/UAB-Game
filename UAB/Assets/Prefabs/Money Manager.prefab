@@ -44,7 +44,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   startingMoney: 100
-  moneyPerMeter: 5
-  earnMoneyPerConnectedBuildingsInTime: 5
-  earnMoneyPerSeconds: 1
+  moneyPerMeter: 10
+  earnMoneyPerConnectedBuildingsInTime: 2
+  earnMoneyPerSeconds: 5
+  HubCost: 25
   moneyText: {fileID: 0}

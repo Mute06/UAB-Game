@@ -72,7 +72,7 @@ public class PenTool : MonoBehaviour
     {
         if (ModeController.Instance.currentMode == Modes.Creating)
         {
-            Debug.Log("Touched");
+            
             if (currentLine == null)
             {
                 currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
@@ -91,21 +91,24 @@ public class PenTool : MonoBehaviour
         else if (ModeController.Instance.currentMode == Modes.HubCreating)
         {
             
-            //Create a new line no matter what
-            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
-            currentLine.penTool = this;
-            
-            DotController dot = Instantiate(HubPrefab, GetMousePosition(), Quaternion.identity, dotParent).GetComponent<DotController>();
-            dot.index = 0;
-            dot.OnDragEvent += MoveDot;
-            dot.OnClickEvent += DotClick;
-            dot.SetLine(currentLine);
-            LastSelectedDot = null;
-            dot.index = currentLine.AddPoint(dot, LastSelectedDot);
-            LastSelectedDot = dot;
-            startingDot = dot;
-            moneyManager.BuildHub();
-            ModeController.Instance.SwitchToCreate();
+            if (moneyManager.BuildHub())
+            {
+                //Create a new line no matter what
+                currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
+                currentLine.penTool = this;
+
+                DotController dot = Instantiate(HubPrefab, GetMousePosition(), Quaternion.identity, dotParent).GetComponent<DotController>();
+                dot.index = 0;
+                dot.OnDragEvent += MoveDot;
+                dot.OnClickEvent += DotClick;
+                dot.SetLine(currentLine);
+                LastSelectedDot = null;
+                dot.index = currentLine.AddPoint(dot, LastSelectedDot);
+                LastSelectedDot = dot;
+                startingDot = dot;
+
+                ModeController.Instance.SwitchToCreate();
+            }
         }
     }
 
@@ -128,18 +131,35 @@ public class PenTool : MonoBehaviour
     {
         if (currentLine != null)
         {
-            foreach (var item in currentLine.points)
-            {
-                item.isEditable = false;
-                item.OnDragEvent -= MoveDot;
-                item.OnClickEvent -= DotClick;
-            }
             float lastLenght = currentLine.lenght;
-            Debug.Log(lastLenght);
-            currentLine = null;
-            lastSelectedDot = null;
-            AddExistingDot(startingDot);
-            moneyManager.BuildLine(lastLenght);
+            if (moneyManager.BuildLine(lastLenght))
+            {
+                foreach (var item in currentLine.points)
+                {
+                    item.isEditable = false;
+                    item.OnDragEvent -= MoveDot;
+                    item.OnClickEvent -= DotClick;
+                }
+                Debug.Log(lastLenght);
+                currentLine = null;
+                lastSelectedDot = null;
+                AddExistingDot(startingDot);
+            }
+            else // Not enough money
+            {
+                foreach (var item in currentLine.points)
+                {
+                    if (item.isHub)
+                    {
+                        continue;
+                    }
+                    Destroy(item.gameObject);
+                }
+                Destroy(currentLine.gameObject);
+
+            }
+
+            
         }
     }
     private void DotClick(DotController dot)

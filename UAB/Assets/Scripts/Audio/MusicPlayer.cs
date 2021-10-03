@@ -11,9 +11,23 @@ public class MusicPlayer : MonoBehaviour
     AudioClip currentTrack;
     private float lenght;
 
+    private static MusicPlayer instance;
     private Coroutine musicLoop;
     private MusicQueue musicQueue;
 
+
+    private void Awake()
+    {
+        if (instance != null)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
     private void Start()
     {
         musicQueue = new MusicQueue(musicClips);
@@ -22,7 +36,6 @@ public class MusicPlayer : MonoBehaviour
 
         StartMusic();
 
-        DontDestroyOnLoad(gameObject);
     }
 
 

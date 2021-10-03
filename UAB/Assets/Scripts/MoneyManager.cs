@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
 
 public class MoneyManager : MonoBehaviour
@@ -34,21 +33,31 @@ public class MoneyManager : MonoBehaviour
         currentMoney = startingMoney;
     }
 
-    public void BuildLine(float length)
+    public bool BuildLine(float length)
     {
         float totalCost = moneyPerMeter * length;
         if (CurrentMoney - totalCost >= 0f)
         {
             CurrentMoney -= totalCost;
             totalCableLenght += length;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
-    public void BuildHub()
+    public bool BuildHub()
     {
         if (CurrentMoney - HubCost >= 0f)
         {
             CurrentMoney -= HubCost;
+            return true;
+        }
+        else
+        {
+            return false;
         }
     }
 
