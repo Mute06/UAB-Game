@@ -31,8 +31,11 @@ public class ModeController : MonoBehaviour
     public PenTool penTool;
     public void SwitchToMove()
     {
-        CreateButton.SetActive(true);
-        completeButton.SetActive(false);
+        if (CreateButton != null && completeButton != null)
+        {
+            CreateButton.SetActive(true);
+            completeButton.SetActive(false);
+        }
         currentMode = Modes.Moving;
     }
 
@@ -50,10 +53,17 @@ public class ModeController : MonoBehaviour
         completeButton.SetActive(false);
     }
 
+    public void SwitchToPaused()
+    {
+        currentMode = Modes.Paused;
+    }
+
     public void CompleteDrawingLine()
     {
         penTool.StopEditingCurrentLine();
     }
+
+
 }
 
 
@@ -62,5 +72,6 @@ public enum Modes
 {
     Moving,
     Creating,
-    HubCreating
+    HubCreating,
+    Paused
 }

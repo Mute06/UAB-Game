@@ -29,10 +29,11 @@ public class MoneyManager : MonoBehaviour
         }
     }
     private CityNetChecker cityNetChecker;
+    private Coroutine earnMoneyCoroutine;
     private void Start()
     {
         cityNetChecker = FindObjectOfType<CityNetChecker>();
-        StartCoroutine(EarnMoney(earnMoneyPerSeconds));
+        earnMoneyCoroutine = StartCoroutine(EarnMoney(earnMoneyPerSeconds));
         currentMoney = startingMoney;
     }
 
@@ -41,6 +42,7 @@ public class MoneyManager : MonoBehaviour
         float totalCost = moneyPerMeter * length;
         if (CurrentMoney - totalCost >= 0f)
         {
+            AudioManager.instance.PlaySound("Cash");
             CurrentMoney -= totalCost;
             totalCableLenght += length;
             Debug.Log(totalCost);
@@ -71,6 +73,11 @@ public class MoneyManager : MonoBehaviour
     {
         while (true)
         {
+            if (cityNetChecker.isLevelCompleted)
+            {
+                StopCoroutine(earnMoneyCoroutine);
+                break;
+            }
             yield return new WaitForSeconds(waitingSeconds);
             CurrentMoney += earnMoneyPerConnectedBuildingsInTime * cityNetChecker.TotalConnectedBuildings;
         }

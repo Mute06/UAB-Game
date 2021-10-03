@@ -9,9 +9,17 @@ public class LevelLoader : MonoBehaviour
     const string prefs_achivedLevel = "achivedLevel";
     public float transitionTime = 1f;
     public Animator transition;
+    [SerializeField] private GameObject gameFinishedPanel;
 
     private void Start()
     {
+        if (SceneManager.GetActiveScene().buildIndex == levelSelectionSceneIndex)
+        {
+            if (PlayerPrefs.GetInt(prefs_achivedLevel) >= 5)
+            {
+                gameFinishedPanel.SetActive(true);
+            }
+        }
         if (!PlayerPrefs.HasKey(prefs_achivedLevel))
         {
             PlayerPrefs.SetInt(prefs_achivedLevel, 0);

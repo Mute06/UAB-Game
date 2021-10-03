@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class CityNetChecker : MonoBehaviour
 {
+    public bool isLevelCompleted = false;
     public int totalBuildings;
     public GameObject CompletePanel;
     private int totalConnectedBuildings;
@@ -27,7 +28,11 @@ public class CityNetChecker : MonoBehaviour
 
     private void LevelCompleted()
     {
-        CompletePanel.SetActive(true);
+        if (!isLevelCompleted)
+        {
+            isLevelCompleted = true;
+            CompletePanel.SetActive(true);
+        }
     }
 
 }

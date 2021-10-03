@@ -85,6 +85,7 @@ public class PenTool : MonoBehaviour
             dot.SetLine(currentLine);
             dot.index = currentLine.AddPoint(dot, LastSelectedDot);
             LastSelectedDot = dot;
+            AudioManager.instance.PlaySound("AddDot");
         }
 
         //Creating a hub
@@ -106,7 +107,7 @@ public class PenTool : MonoBehaviour
                 dot.index = currentLine.AddPoint(dot, LastSelectedDot);
                 LastSelectedDot = dot;
                 startingDot = dot;
-
+                AudioManager.instance.PlaySound("AddHub");
                 ModeController.Instance.SwitchToCreate();
             }
         }
@@ -165,9 +166,11 @@ public class PenTool : MonoBehaviour
     private void DotClick(DotController dot)
     {
         LastSelectedDot = dot;
+        /*
         if (dot.isHub)
         {
-            /*
+            
+            StopEditingCurrentLine();
             currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
             currentLine.penTool = this;
 
@@ -181,8 +184,9 @@ public class PenTool : MonoBehaviour
             
             startingDot = dot;
             ModeController.Instance.SwitchToCreate();
-            */
+            
         }
+        */
     }
 
     private void MoveDot(DotController dot)

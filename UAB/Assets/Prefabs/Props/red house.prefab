@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cityNetChecker: {fileID: 0}
-  checkRadius: 2
+  checkRadius: 1.5
   DotsLayer:
     serializedVersion: 2
     m_Bits: 64
