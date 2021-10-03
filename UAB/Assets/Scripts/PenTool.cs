@@ -11,6 +11,7 @@ public class PenTool : MonoBehaviour
     [SerializeField] GameObject dotPrefab;
     [SerializeField] private Transform dotParent;
     [SerializeField] private DotController startingDot;
+    [SerializeField] private GameObject HubPrefab;
     private DotController lastSelectedDot;
     public DotController LastSelectedDot { 
         get
@@ -86,6 +87,26 @@ public class PenTool : MonoBehaviour
             LastSelectedDot = dot;
         }
 
+        //Creating a hub
+        else if (ModeController.Instance.currentMode == Modes.HubCreating)
+        {
+            
+            //Create a new line no matter what
+            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
+            currentLine.penTool = this;
+            
+            DotController dot = Instantiate(HubPrefab, GetMousePosition(), Quaternion.identity, dotParent).GetComponent<DotController>();
+            dot.index = 0;
+            dot.OnDragEvent += MoveDot;
+            dot.OnClickEvent += DotClick;
+            dot.SetLine(currentLine);
+            LastSelectedDot = null;
+            dot.index = currentLine.AddPoint(dot, LastSelectedDot);
+            LastSelectedDot = dot;
+            startingDot = dot;
+            moneyManager.BuildHub();
+            ModeController.Instance.SwitchToCreate();
+        }
     }
 
     public void AddExistingDot(DotController dot)
@@ -124,6 +145,22 @@ public class PenTool : MonoBehaviour
     private void DotClick(DotController dot)
     {
         LastSelectedDot = dot;
+        if (dot.isHub)
+        {
+            currentLine = Instantiate(linePrefab, Vector3.zero, Quaternion.identity, lineParent).GetComponent<LineController>();
+            currentLine.penTool = this;
+
+            dot.index = 0;
+            dot.OnDragEvent += MoveDot;
+            dot.OnClickEvent += DotClick;
+            dot.SetLine(currentLine);
+            LastSelectedDot = null;
+            LastSelectedDot = dot;
+            dot.index = currentLine.AddPoint(dot, LastSelectedDot);
+            
+            startingDot = dot;
+            ModeController.Instance.SwitchToCreate();
+        }
     }
 
     private void MoveDot(DotController dot)

@@ -10,6 +10,7 @@ public class MoneyManager : MonoBehaviour
     public float moneyPerMeter = 5f;
     public float earnMoneyPerConnectedBuildingsInTime = 5f;
     public float earnMoneyPerSeconds;
+    public float HubCost = 25f;
     public TextMeshProUGUI moneyText;
     private float totalCableLenght;
     private float currentMoney;
@@ -40,6 +41,14 @@ public class MoneyManager : MonoBehaviour
         {
             CurrentMoney -= totalCost;
             totalCableLenght += length;
+        }
+    }
+
+    public void BuildHub()
+    {
+        if (CurrentMoney - HubCost >= 0f)
+        {
+            CurrentMoney -= HubCost;
         }
     }
 

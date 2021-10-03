@@ -12,6 +12,7 @@ public class DotController : MonoBehaviour , IDragHandler , IPointerClickHandler
     public Action<DotController> OnDragEvent;
     [HideInInspector] public Image image;
     public bool isEditable = true;
+    public bool isHub;
 
 
     private void Awake()
